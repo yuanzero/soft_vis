@@ -140,8 +140,9 @@ public class PositionSliderHandler_new : MonoBehaviour
     private Vector3 GetNormalOnCurve(float t)
     {
         Vector3 tangent = GetTangentOnCurve(t);
-        Vector3 binormal = Vector3.Cross(Vector3.up, tangent).normalized;
-        Vector3 normal = Vector3.Cross(tangent, binormal).normalized;
+        Vector3 binormal_z = Vector3.Cross(tangent, Vector3.up).normalized;
+        Vector3 binormal = new Vector3(1, 0, 0);
+        Vector3 normal = Vector3.Cross(binormal,tangent).normalized;
 
        /*
         //float xAngle = Vector3.SignedAngle(normal, Vector3.right, Vector3.up);
@@ -159,7 +160,7 @@ public class PositionSliderHandler_new : MonoBehaviour
         projection.Normalize(); // 将投影向量归一化处理
 
         // 计算物体绕x轴旋转的角度
-        float xAngle = Vector3.SignedAngle(Vector3.forward, projection, Vector3.right)+90f;
+        float xAngle = Vector3.SignedAngle(Vector3.up, projection, Vector3.right);
 
         // 计算法向量在x-z平面上的投影向量
         Vector3 projection_xz = new Vector3(normal.x, 0, normal.z);
@@ -169,11 +170,13 @@ public class PositionSliderHandler_new : MonoBehaviour
         float yAngle = Vector3.SignedAngle(Vector3.forward, projection_xz, Vector3.up);
 
         // 计算法向量在x-y平面上的投影向量
-        Vector3 projection_xy = new Vector3(normal.x,normal.y, 0);
+        Vector3 normal_z = Vector3.Cross(binormal_z, tangent).normalized;
+        Vector3 projection_xy = new Vector3(normal_z.x, normal_z.y, 0);
         projection_xy.Normalize(); // 将投影向量归一化处理
 
         // 计算物体绕z轴旋转的角度
         float zAngle = Vector3.SignedAngle(Vector3.up, projection_xy, Vector3.forward);
+        //float zAngle = 0f;
 
         // 处理角度值，确保其在[-180, 180]之间
         if (yAngle > 180f)
@@ -234,7 +237,7 @@ public class PositionSliderHandler_new : MonoBehaviour
 
         Vector3 tangent = -3 * uu * p0;
         tangent += (3 * uu - 6 * u * t) * p1;
-        tangent += (-3 * tt + 6 * t) * p2;
+        tangent += (-3 * tt + 6 * u * t) * p2;
         tangent += 3 * tt * p3;
 
         return tangent.normalized;

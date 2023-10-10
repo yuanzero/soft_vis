@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+// 画出参数化曲线
+
 public class CurveGenerator : MonoBehaviour
 {
     public Transform[] controlPoints; // 输入点数组
