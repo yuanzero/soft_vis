@@ -31,6 +31,9 @@ public class PositionSliderHandler_new : MonoBehaviour
     [Tooltip("Set true if using curve control")]
     public bool isCurveControl = false;
 
+    // set reference coor for cureve
+    public Transform Curve;
+
 
     // Get reference to all individual joint handlers
     public SoftgripperJointHandler[] jointHandler;
@@ -61,10 +64,12 @@ public class PositionSliderHandler_new : MonoBehaviour
         {
             float t = (float)i / (numPoints - 1);
             Vector3 point = GetPointOnCurve(t);
-            curvePoints.Add(point);
+            Vector3 targetPos = Curve.TransformPoint(point);
+            curvePoints.Add(targetPos);
 
-            Vector3 normal = GetNormalOnCurve(t);
-            normals.Add(normal);
+            Vector3 normal_angle = GetNormalOnCurve(t);
+
+            normals.Add(normal_angle);
 
         }
 
@@ -105,19 +110,19 @@ public class PositionSliderHandler_new : MonoBehaviour
     // 获取曲线上指定参数值处的点
     private Vector3 GetPointOnCurve(float t)
     {
-   
+        /*
         Vector3 p0 = controlPoints[0].position;
         Vector3 p1 = controlPoints[1].position;
         Vector3 p2 = controlPoints[2].position;
         Vector3 p3 = controlPoints[3].position;
-      
+        */
 
-        /*
+        
         Vector3 p0 = controlPoints[0].localPosition;
         Vector3 p1 = controlPoints[1].localPosition;
         Vector3 p2 = controlPoints[2].localPosition;
         Vector3 p3 = controlPoints[3].localPosition;
-        */
+        
 
 
         float u = 1 - t;
@@ -140,44 +145,60 @@ public class PositionSliderHandler_new : MonoBehaviour
     private Vector3 GetNormalOnCurve(float t)
     {
         Vector3 tangent = GetTangentOnCurve(t);
-        Vector3 binormal_z = Vector3.Cross(tangent, Vector3.up).normalized;
-        Vector3 binormal = new Vector3(1, 0, 0);
+
+
+        //Vector3 binormal = new Vector3(1, 0, 0);
+        Vector3 binormal = Curve.right;
+
+        //Vector3 binormal = Vector3.Cross(tangent, Vector3.up).normalized;
         Vector3 normal = Vector3.Cross(binormal,tangent).normalized;
 
-       /*
-        //float xAngle = Vector3.SignedAngle(normal, Vector3.right, Vector3.up);
-        float yAngle = Vector3.SignedAngle(normal, Vector3.up, Vector3.right);
-        float zAngle = Vector3.SignedAngle(normal, Vector3.forward, Vector3.up);
-                   
+        // 判断法向量方向是否与切线夹角为逆时针旋转90度
+        Vector2 tangent2D = new Vector2(tangent.y, tangent.z).normalized;
+        Vector2 normal2D = new Vector2(normal.y, normal.z).normalized;
+        float cross = tangent2D.x * normal2D.y - tangent2D.y * normal2D.x;
+        if (cross < 0)
+        {
+            normal = -normal; // 反转法向量方向
+        }
 
-        //xAngle = 0f;
-        yAngle = 0f;
-        zAngle = 0f;
-       */
+
+
+        /*
+         //float xAngle = Vector3.SignedAngle(normal, Vector3.right, Vector3.up);
+         float yAngle = Vector3.SignedAngle(normal, Vector3.up, Vector3.right);
+         float zAngle = Vector3.SignedAngle(normal, Vector3.forward, Vector3.up);
+
+
+         //xAngle = 0f;
+         yAngle = 0f;
+         zAngle = 0f;
+        */
 
         // 计算法向量在y-z平面上的投影向量
         Vector3 projection = new Vector3(0, normal.y, normal.z);
         projection.Normalize(); // 将投影向量归一化处理
 
         // 计算物体绕x轴旋转的角度
-        float xAngle = Vector3.SignedAngle(Vector3.up, projection, Vector3.right);
+        float xAngle = Vector3.SignedAngle(Vector3.up, projection, Vector3.right)+90f;
 
         // 计算法向量在x-z平面上的投影向量
         Vector3 projection_xz = new Vector3(normal.x, 0, normal.z);
         projection_xz.Normalize(); // 将投影向量归一化处理
 
         // 计算物体绕y轴旋转的角度
-        float yAngle = Vector3.SignedAngle(Vector3.forward, projection_xz, Vector3.up);
+        //float yAngle = Vector3.SignedAngle(Vector3.forward, projection_xz, Vector3.up);
+        float yAngle = 0f;
 
         // 计算法向量在x-y平面上的投影向量
-        Vector3 normal_z = Vector3.Cross(binormal_z, tangent).normalized;
-        Vector3 projection_xy = new Vector3(normal_z.x, normal_z.y, 0);
+        Vector3 projection_xy = new Vector3(normal.x, normal.y, 0);
         projection_xy.Normalize(); // 将投影向量归一化处理
 
         // 计算物体绕z轴旋转的角度
-        float zAngle = Vector3.SignedAngle(Vector3.up, projection_xy, Vector3.forward);
-        //float zAngle = 0f;
+        //float zAngle = Vector3.SignedAngle(Vector3.up, projection_xy, Vector3.forward);
+        float zAngle = 0f;
 
+        /*
         // 处理角度值，确保其在[-180, 180]之间
         if (yAngle > 180f)
         {
@@ -216,6 +237,7 @@ public class PositionSliderHandler_new : MonoBehaviour
         {
             zAngle += 360f;
         }
+        */
 
         Vector3 angles = new Vector3(xAngle, yAngle, zAngle);
         Debug.Log("Angles: " + angles);
@@ -226,10 +248,18 @@ public class PositionSliderHandler_new : MonoBehaviour
     // 获取曲线上指定参数值处的切向量
     private Vector3 GetTangentOnCurve(float t)
     {
+        /*
         Vector3 p0 = controlPoints[0].position;
         Vector3 p1 = controlPoints[1].position;
         Vector3 p2 = controlPoints[2].position;
         Vector3 p3 = controlPoints[3].position;
+        */
+
+
+        Vector3 p0 = controlPoints[0].localPosition;
+        Vector3 p1 = controlPoints[1].localPosition;
+        Vector3 p2 = controlPoints[2].localPosition;
+        Vector3 p3 = controlPoints[3].localPosition;
 
         float u = 1 - t;
         float tt = t * t;
@@ -243,4 +273,5 @@ public class PositionSliderHandler_new : MonoBehaviour
         return tangent.normalized;
     }
 
+   
 }

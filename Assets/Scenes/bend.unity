@@ -884,7 +884,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 255695196}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.03, z: -0.24}
+  m_LocalPosition: {x: 0, y: -2.24, z: -0.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1590,7 +1590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4720884688345560, guid: bb5e6aea88a650f4a8317e74940b0ea4, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4720884688345560, guid: bb5e6aea88a650f4a8317e74940b0ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2728,7 +2728,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349200340}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2737,8 +2737,8 @@ Transform:
   - {fileID: 101787076}
   - {fileID: 998645664}
   - {fileID: 98848965}
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 1982247906}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1406401251
 GameObject:
@@ -3260,6 +3260,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753871854}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1776689870 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e8f043696f77b744b99a2d88d56ddad9, type: 3}
+  m_PrefabInstance: {fileID: 1876333503}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1825393937 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3591886281852097759, guid: e8f043696f77b744b99a2d88d56ddad9, type: 3}
@@ -3654,6 +3659,11 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
   m_PVRTiledBaking: 0
+--- !u!4 &1982247906 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8879528566716807029, guid: e8f043696f77b744b99a2d88d56ddad9, type: 3}
+  m_PrefabInstance: {fileID: 1876333503}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2006140094
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,6 +3912,7 @@ MonoBehaviour:
   RotationValueText: {fileID: 604819795}
   isSliderControl: 0
   isCurveControl: 1
+  Curve: {fileID: 1776689870}
   jointHandler:
   - {fileID: 804621659}
   - {fileID: 2145355928}

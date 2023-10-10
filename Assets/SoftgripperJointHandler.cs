@@ -85,7 +85,7 @@ public class SoftgripperJointHandler : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, positionMsg, positionLerpSpeed);
                 if (!isFixedRotation)
                 {
-                   transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(rotationMsg), rotationLerpSpeed);
+                   transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(rotationMsg), rotationLerpSpeed);
                 }
             }
         }
