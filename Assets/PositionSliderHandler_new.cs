@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 
 /* This class is used to manipulate the interpolation/lerp speed between current state and the 
@@ -59,6 +60,17 @@ public class PositionSliderHandler_new : MonoBehaviour
         curvePoints.Clear();
         normals.Clear();
 
+        // 构造曲线方法2
+
+        Vector3 p0 = controlPoints[0].localPosition;
+        Vector3 p1 = controlPoints[1].localPosition;
+        Vector3 p2 = controlPoints[2].localPosition;
+        Vector3 p3 = controlPoints[3].localPosition;
+
+        BezierCurve curve = new BezierCurve(p0, p1, p2, p3);
+
+        
+
         // 构造曲线
         for (int i = 0; i < numPoints; i++)
         {
@@ -67,11 +79,27 @@ public class PositionSliderHandler_new : MonoBehaviour
             Vector3 targetPos = Curve.TransformPoint(point);
             curvePoints.Add(targetPos);
 
-            Vector3 normal_angle = GetNormalOnCurve(t);
+            //Vector3 normal_angle = GetNormalOnCurve(t);  //方法1
+            Vector3 normal_angle = curve.GetAngleWithAllAxis(t); //方法2
+            
+
+            // 连续性判断
+            if (normals.Count > 1) 
+            { 
+                float difference = normals[normals.Count - 1].y - normal_angle.y; 
+                if (difference > 90f || difference < -90f)
+                { 
+                    normal_angle.y = normal_angle.y + 180f; 
+                } 
+            }
+
+            Debug.Log("normal_new" + normal_angle);
 
             normals.Add(normal_angle);
 
         }
+
+        
 
         // 在场景中绘制曲线
         for (int i = 0; i < curvePoints.Count - 1; i++)
@@ -187,8 +215,8 @@ public class PositionSliderHandler_new : MonoBehaviour
         projection_xz.Normalize(); // 将投影向量归一化处理
 
         // 计算物体绕y轴旋转的角度
-        //float yAngle = Vector3.SignedAngle(Vector3.forward, projection_xz, Vector3.up);
-        float yAngle = 0f;
+        float yAngle = Vector3.SignedAngle(Vector3.forward, projection_xz, Vector3.up);
+        //float yAngle = 0f;
 
         // 计算法向量在x-y平面上的投影向量
         Vector3 projection_xy = new Vector3(normal.x, normal.y, 0);
@@ -273,5 +301,71 @@ public class PositionSliderHandler_new : MonoBehaviour
         return tangent.normalized;
     }
 
-   
+
+    // 方法2构造曲线
+    public class BezierCurve
+    {
+        private Vector3[] controlPoints;
+
+        public BezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+        {
+            controlPoints = new Vector3[] { p0, p1, p2, p3 };
+        }
+
+        public Vector3 GetTangent(float t)
+        {
+            Vector3 tangent = 3 * (1 - t) * (1 - t) * (controlPoints[1] - controlPoints[0])
+                            + 6 * (1 - t) * t * (controlPoints[2] - controlPoints[1])
+                            + 3 * t * t * (controlPoints[3] - controlPoints[2]);
+            return Vector3.Normalize(tangent);
+        }
+
+        public Vector3 GetNormal(float t)
+        {
+            Vector3 tangent = GetTangent(t);
+            Vector3 normal_sub = 6 * (1 - t) * (controlPoints[2] - 2 * controlPoints[1] + controlPoints[0])
+                           + 6 * t * (controlPoints[3] - 2 * controlPoints[2] + controlPoints[1]);
+            Vector3 normal_main = Vector3.Normalize(Vector3.Cross(tangent, normal_sub)); //outside the plane
+            Vector3 normal = Vector3.Normalize(Vector3.Cross(tangent, normal_main));
+
+
+            // 判断法向量方向是否与切线夹角为逆时针旋转90度
+            Vector2 tangent2D = new Vector2(tangent.y, tangent.z).normalized;
+            Vector2 normal2D = new Vector2(normal.y, normal.z).normalized;
+            float cross = tangent2D.x * normal2D.y - tangent2D.y * normal2D.x;
+            if (cross < 0)
+            {
+                normal = -normal; // 反转法向量方向
+            }
+            return normal;
+        }
+
+        public float GetAngleWithXAxis(float t)
+        {
+            Vector3 normal = GetNormal(t);
+            return Vector3.SignedAngle(normal, new Vector3(0, 1, 0), new Vector3(-1, 0, 0))+90f;
+        }
+
+        public float GetAngleWithYAxis(float t)
+        {
+            Vector3 normal = GetNormal(t);
+            return Vector3.SignedAngle(normal, new Vector3(1, 0, 0), new Vector3(0, 1, 0))-90f;
+        }
+
+        public float GetAngleWithZAxis(float t)
+        {
+            Vector3 normal = GetNormal(t);
+            return Vector3.SignedAngle(normal, new Vector3(0, 1, 0), new Vector3(0, 0, 1));
+            //return (float)Math.Acos(Vector3.Dot(normal, new Vector3(0, 0, 1)));
+        }
+
+        public Vector3 GetAngleWithAllAxis(float t)
+        {
+            Vector3 normal_angle = new Vector3(GetAngleWithXAxis(t), 0, 0); // very stable
+            //Vector3 normal_angle = new Vector3(GetAngleWithXAxis(t), 0, GetAngleWithZAxis(t)); // stable
+            // Vector3 normal_angle = new Vector3(GetAngleWithXAxis(t), GetAngleWithYAxis(t), GetAngleWithZAxis(t)); // not stable
+            //normal_angle = Vector3.Scale(normal_angle, new Vector3((float)(180f /Math.PI), (float)(180f / Math.PI), (float)(180f / Math.PI)));
+            return normal_angle;
+        }     
+    }
 }
