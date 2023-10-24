@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 90
+  controlID: 112
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -94,8 +94,8 @@ MonoBehaviour:
     y: 0
     width: 604.6666
     height: 1299.3334
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -120,8 +120,8 @@ MonoBehaviour:
     y: 0
     width: 483.33334
     height: 773.3333
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 95
+  controlID: 113
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 96
+  controlID: 114
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -343,22 +343,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Uduino
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Uduino
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Rearch_Files\soft_vis
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 7a650000
-    m_LastClickedID: 25978
-    m_ExpandedIDs: 000000005e5c0000
+    m_SelectedIDs: 9e5c0000
+    m_LastClickedID: 23710
+    m_ExpandedIDs: 000000005c5c000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -386,7 +386,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000005e5c0000
+    m_ExpandedIDs: 000000005c5c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -411,8 +411,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 7a650000
-    m_LastClickedInstanceID: 25978
+    m_SelectedInstanceIDs: b8b4ffff
+    m_LastClickedInstanceID: -19272
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000865f0000
     m_RenameOverlay:
@@ -513,10 +513,10 @@ MonoBehaviour:
     m_SaveData: []
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 665a0000
-      m_LastClickedID: 23142
-      m_ExpandedIDs: 30fbffff32fbffff38fbffff025b00004e5b0000
+      scrollPos: {x: 0, y: 4.666687}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: b6b4ffff74c1ffff82c2ffffe0caffffe4caffffe6caffffd2f4ffffe2f4ffff00f6ffff08f6ffff32fbffff38fbffff4e5b0000ae5d0000fa5d00005a5e00007e710000e0710000cc760000fc760000227700008477000092770000ec77000078780000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -798,9 +798,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 4.502529, y: 2.3879366, z: -9.922973}
+    m_Target: {x: -14.081335, y: 0.6750207, z: -6.598869}
     speed: 2
-    m_Value: {x: 4.502529, y: 2.3879366, z: -9.922973}
+    m_Value: {x: -14.081335, y: 0.6750207, z: -6.598869}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -847,13 +847,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.058563992, y: 0.52645093, z: -0.036382873, w: 0.84740615}
+    m_Target: {x: -0.0042426153, y: 0.7070941, z: 0.0042426162, w: 0.70709413}
     speed: 2
-    m_Value: {x: 0.05856396, y: 0.52645063, z: -0.03638285, w: 0.8474057}
+    m_Value: {x: -0.0042426153, y: 0.7070941, z: 0.0042426162, w: 0.70709413}
   m_Size:
-    m_Target: 12.164367
+    m_Target: 45.178574
     speed: 2
-    m_Value: 12.164367
+    m_Value: 43.233086
   m_Ortho:
     m_Target: 0
     speed: 2

@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/bend.unity
+- path: Assets/Scenes/assembly.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
