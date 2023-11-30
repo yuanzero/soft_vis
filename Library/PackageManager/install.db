@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "packages": {
+    "com.microsoft.mixedreality.openxr": {
+      "tarball": {
+        "hash": "2ee35a5c3070",
+        "mtime": 1700713825788,
+        "size": 11917159,
+        "localPath": "D:\\Rearch_Files\\soft_vis\\Packages\\MixedReality\\com.microsoft.mixedreality.openxr-1.8.1.tgz"
+      }
+    }
+  }
+}
